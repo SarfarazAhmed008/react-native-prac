@@ -1,38 +1,50 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, { Component } from 'react';
 import {
-  Platform,
   StyleSheet,
   Text,
-  View
+  View,
+  Button,
 } from 'react-native';
+import { createStackNavigator } from 'react-navigation';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' +
-    'Cmd+D or shake for dev menu',
-  android: 'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
-
-type Props = {};
-export default class App extends Component<Props> {
+class App extends Component {
+  static navigationOptions = {
+    header : null
+  };
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
-          Welcome to React Native!
+          Welcome to App's Home!
         </Text>
-        <Text style={styles.instructions}>
-          To get started, edit App.js
+        <Button title="Go to Component 1" onPress={()=> this.props.navigation.navigate('component1')} />
+      </View>
+    );
+  }
+}
+
+
+class Component1 extends Component {
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.welcome}>
+          Welcome to Component 1!
         </Text>
-        <Text style={styles.instructions}>
-          {instructions}
+        <Button title="Go to Component 2" onPress={()=> this.props.navigation.navigate('component2')} />
+      </View>
+    );
+  }
+}
+
+class Component2 extends Component {
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.welcome}>
+          Welcome to Component 2!
         </Text>
+        <Button title="Go Back to Home" onPress={()=> this.props.navigation.navigate('home')} />
       </View>
     );
   }
@@ -50,9 +62,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     margin: 10,
   },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+});
+
+export default createStackNavigator({
+  home : App,
+  component1 : Component1,
+  component2 : Component2,
 });
